@@ -18,6 +18,9 @@ fn main() {
     parse().expect("invalid day given");
   let part: i32 = args.next().expect("part must be given").
     parse().expect("invalid part given");
+  if part != 1 && part != 2 {
+    panic!("part must be 1 or 2");
+  }
   let solve: fn(String, i32) -> String = match day {
     1 => day1::solve,
     _ => panic!("that day has not been solved"),
