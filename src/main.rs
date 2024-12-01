@@ -7,6 +7,23 @@
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
+mod day1;
+
+use std::{env, io};
+
 fn main() {
-  println!("hi!");
+  let mut args = env::args();
+  args.next();
+  let day: i32 = args.next().expect("day must be given").
+    parse().expect("invalid day given");
+  let part: i32 = args.next().expect("part must be given").
+    parse().expect("invalid part given");
+  let solve: fn(String, i32) -> String = match day {
+    1 => day1::solve,
+    _ => panic!("that day has not been solved"),
+  };
+  let input = io::read_to_string(io::stdin()).
+    expect("failed to read input");
+  let output = solve(input, part);
+  println!("{output}");
 }
