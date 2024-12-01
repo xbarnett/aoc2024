@@ -12,23 +12,21 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         overlays = [ fenix.overlays.default ];
-        pkgs = import nixpkgs {
-          inherit system overlays;
-        };
-	llvm = pkgs.llvmPackages_19;
+        pkgs = import nixpkgs { inherit system overlays; };
+        llvm = pkgs.llvmPackages_19;
         rust = with fenix.packages.${system}; combine [
           stable.cargo
           stable.rustc
           targets.x86_64-unknown-linux-musl.stable.rust-std
         ];
       in {
-        devShell = pkgs.mkShell.override { stdenv = pkgs.stdenvNoCC; } {
+        devShell = pkgs.mkShellNoCC {
           buildInputs = [
-	    llvm.bintools
-	    llvm.clang
+            llvm.bintools
+            llvm.clang
             rust
           ];
-	  CC = "${llvm.clang}/bin/clang";
+          CC = "${llvm.clang}/bin/clang";
         };
       }
     );
