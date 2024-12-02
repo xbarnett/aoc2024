@@ -8,6 +8,7 @@
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 mod day1;
+mod day2;
 
 use std::{env, io};
 
@@ -21,6 +22,8 @@ fn main() {
   let solve: fn(String) -> String = match (day, part) {
     (1, 1) => day1::part_one,
     (1, 2) => day1::part_two,
+    (2, 1) => day2::part_one,
+    (2, 2) => day2::part_two,
     _ => panic!("that problem has not been solved"),
   };
   let input = io::read_to_string(io::stdin()).
