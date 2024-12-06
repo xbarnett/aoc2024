@@ -14,11 +14,11 @@ fn solve(map: &HashMap<(i32, i32), char>, obstacle: Option<(i32, i32)>) ->
   let mut states = HashSet::new();
   loop {
     if !states.insert((pos, dir)) {
-      return None;
+      break None;
     }
     let next = (pos.0 + [-1, 0, 1, 0][dir], pos.1 + [0, 1, 0, -1][dir]);
     let Some(&there) = map.get(&next) else {
-      return Some(states.iter().map(|&s| s.0).collect());
+      break Some(states.iter().map(|&s| s.0).collect());
     };
     if there == '#' || Some(next) == obstacle {
       dir = (dir + 1) % 4;
