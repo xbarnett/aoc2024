@@ -6,21 +6,20 @@ fn parse(input: String) -> HashMap<(i32, i32), char> {
   ).flatten().collect()
 }
 
-fn solve(map: &HashMap<(i32, i32), char>, obstacle: Option<(i32, i32)>) -> Option<usize> {
+fn solve(map: &HashMap<(i32, i32), char>, obstacle: Option<(i32, i32)>) ->
+  Option<HashSet<(i32, i32)>>
+{
   let mut pos = *map.iter().filter(|(_, &v)| v == '^').next().unwrap().0;
   let mut dir = 0;
   let mut states = HashSet::new();
   loop {
-    if states.contains(&(pos, dir)) {
+    if !states.insert((pos, dir)) {
       return None;
     }
-    states.insert((pos, dir));
-
     let next = (pos.0 + [-1, 0, 1, 0][dir], pos.1 + [0, 1, 0, -1][dir]);
     let Some(&there) = map.get(&next) else {
-      return Some(states.iter().map(|&s| s.0).collect::<HashSet<_>>().len());
+      return Some(states.iter().map(|&s| s.0).collect());
     };
-
     if there == '#' || Some(next) == obstacle {
       dir = (dir + 1) % 4;
     } else {
@@ -30,16 +29,12 @@ fn solve(map: &HashMap<(i32, i32), char>, obstacle: Option<(i32, i32)>) -> Optio
 }
 
 pub fn part_one(input: String) -> String {
-  solve(&parse(input), None).unwrap().to_string()
+  solve(&parse(input), None).unwrap().len().to_string()
 }
 
 pub fn part_two(input: String) -> String {
   let map = parse(input);
-  let mut result = 0;
-  for (&k, &v) in &map {
-    if v == '.' && solve(&map, Some(k)).is_none() {
-      result += 1;
-    }
-  }
-  result.to_string()
+  solve(&map, None).unwrap().iter().filter(|&&obstacle| {
+    map[&obstacle] == '.' && solve(&map, Some(obstacle)).is_none()
+  }).count().to_string()
 }
