@@ -12,13 +12,10 @@ fn solve(map: &HashMap<(i32, i32), char>, obstacle: Option<(i32, i32)>) ->
   let mut pos = *map.iter().filter(|(_, &v)| v == '^').next().unwrap().0;
   let mut dir = 0;
   let mut states = HashSet::new();
-  loop {
-    if !states.insert((pos, dir)) {
-      break None;
-    }
+  while states.insert((pos, dir)) {
     let next = (pos.0 + [-1, 0, 1, 0][dir], pos.1 + [0, 1, 0, -1][dir]);
     let Some(&there) = map.get(&next) else {
-      break Some(states.iter().map(|&s| s.0).collect());
+      return Some(states.iter().map(|&s| s.0).collect());
     };
     if there == '#' || Some(next) == obstacle {
       dir = (dir + 1) % 4;
@@ -26,6 +23,7 @@ fn solve(map: &HashMap<(i32, i32), char>, obstacle: Option<(i32, i32)>) ->
       pos = next;
     }    
   }
+  None
 }
 
 pub fn part_one(input: String) -> String {
