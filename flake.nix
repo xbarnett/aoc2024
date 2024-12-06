@@ -23,10 +23,8 @@
         devShell = pkgs.mkShellNoCC {
           buildInputs = [
             llvm.bintools
-            llvm.clang
             rust
           ];
-          CC = "${llvm.clang}/bin/clang";
         };
       }
     );

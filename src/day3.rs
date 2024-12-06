@@ -1,5 +1,5 @@
 fn parse_int(input: &str) -> Option<(u32, &str)> {
-  let digits: Vec<u32> = input.chars().map_while(|c| c.to_digit(10)).collect();
+  let digits: Vec<_> = input.chars().map_while(|c| c.to_digit(10)).collect();
   if digits.is_empty() {
     return None;
   }
@@ -26,7 +26,10 @@ pub fn part_one(input: String) -> String {
   let mut result = 0;
   while !input.is_empty() {
     input = match parse_mul(input) {
-      Some((n, input)) => { result += n; input },
+      Some((n, input)) => {
+        result += n;
+        input
+      },
       None => &input[1 ..],
     };
   }
@@ -38,10 +41,19 @@ pub fn part_two(input: String) -> String {
   let mut result = 0;
   let mut active = true;
   while !input.is_empty() {
-    if input.starts_with("do()") { active = true; }
-    if input.starts_with("don't()") { active = false; }
+    if input.starts_with("do()") {
+      active = true;
+    }
+    if input.starts_with("don't()") {
+      active = false;
+    }
     input = match parse_mul(input) {
-      Some((n, input)) => { if active { result += n; } input },
+      Some((n, input)) => {
+        if active {
+          result += n;
+        }
+        input
+      },
       None => &input[1 ..],
     };
   }

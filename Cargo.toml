@@ -1,9 +1,8 @@
 [package]
-name = "project"
+name = "aoc2024"
 edition = "2021"
 
 [dependencies]
-mimalloc = { version = "0.1.43" }
 
 [profile.release]
 codegen-units = 1

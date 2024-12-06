@@ -5,7 +5,7 @@ fn parse(input: String) -> Vec<Vec<i32>> {
 }
 
 fn is_safe(report: &[i32]) -> bool {
-  let diffs: Vec<i32> = (1 .. report.len()).
+  let diffs: Vec<_> = (1 .. report.len()).
     map(|i| report[i] - report[i - 1]).collect();
   diffs.iter().all(|&n| -3 <= n && n <= -1) ||
     diffs.iter().all(|&n| 1 <= n && n <= 3)
@@ -23,8 +23,8 @@ pub fn part_two(input: String) -> String {
       result += 1;
       continue;
     } 
-    for i in 0..report.len() {
-      let mut removed: Vec<i32> = vec![];
+    for i in 0 .. report.len() {
+      let mut removed = vec![];
       removed.extend(&report[.. i]);
       removed.extend(&report[i + 1 ..]);
       if is_safe(&removed) {
