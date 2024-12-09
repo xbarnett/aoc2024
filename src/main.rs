@@ -12,6 +12,7 @@ mod day5;
 mod day6;
 mod day7;
 mod day8;
+mod day9;
 
 use std::{env, io};
 
@@ -37,6 +38,8 @@ fn main() {
     (7, 2) => day7::part_two,
     (8, 1) => day8::part_one,
     (8, 2) => day8::part_two,
+    (9, 1) => day9::part_one,
+    (9, 2) => day9::part_two,
     _ => panic!(),
   };
   let input = io::read_to_string(io::stdin()).unwrap();
