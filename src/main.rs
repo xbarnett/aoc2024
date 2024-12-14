@@ -17,6 +17,7 @@ mod day10;
 mod day11;
 mod day12;
 mod day13;
+mod day14;
 
 use std::{env, io};
 
@@ -52,7 +53,9 @@ fn main() {
     (12, 2) => day12::part_two,
     (13, 1) => day13::part_one,
     (13, 2) => day13::part_two,
-    _ => panic!(),
+    (14, 1) => day14::part_one,
+    (14, 2) => day14::part_two,
+    _ => panic!()
   };
   let input = io::read_to_string(io::stdin()).unwrap();
   let output = solve(input);
