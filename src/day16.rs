@@ -78,7 +78,6 @@ fn solve(input: String) -> (i32, Vec<(i32, i32, i32)>,
   (shortest_distance, ends, predecessors)
 }
 
-
 pub fn part_one(input: String) -> String {
   solve(input).0.to_string()
 }
